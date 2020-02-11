@@ -90,39 +90,50 @@ public class Automaton {
 	 * @param numSteps is how many generations the ECA will be evolved
 	 */
 	public void evolve(int numSteps) {
-		
+		//gets most recent Generation
 		Generation workingGeneration = generationList.get(steps);
+		//initializes Cell array that will become the next Generation
 		Cell[] nextGeneration = new Cell[initState.length];
-		Cell cell1 = new Cell(false);
-		Cell cell2 = new Cell(false);
-		Cell cell3 = new Cell(false);
+		//initializes 3 Cell objects to be used to determine the Cell objects in the next Generation
+		Cell leftCell = new Cell(false);
+		Cell centerCell = new Cell(false);
+		Cell rightCell = new Cell(false);
 		
+		//outer for loop iterates numSteps times
 		for (int i = numSteps; i > 0; --i) {
+			//at the beginning of each iteration of the outer for loop, the workingGeneration is updated to be the most recent generation
 			workingGeneration = generationList.get(steps);
+			//similarly, the nextGeneration is initialized with default Cell objects
 			nextGeneration = new Cell[initState.length];
 			
+			//inner for loop iterates through each Cell of any given Generation(all generations of a given ECA are the same length)
 			for(int j = 0; j < initState.length; ++j) {
+				//if the "center cell" is the first cell in the Generation, the left cell is defined as the last cell in the Generation
 				if (j == 0) {
-					cell1 = workingGeneration.getCell(initState.length - 1);
-					cell2 = workingGeneration.getCell(j);
-					cell3 = workingGeneration.getCell(j + 1);
+					leftCell = workingGeneration.getCell(initState.length - 1);
+					centerCell = workingGeneration.getCell(j);
+					rightCell = workingGeneration.getCell(j + 1);
 				}
 				
+				//if the "center cell" is the last cell in the Generation, the right cell is defined as the first cell in the Generation
 				else if(j == initState.length - 1) {
-					cell1 = workingGeneration.getCell(j - 1);
-					cell2 = workingGeneration.getCell(j);
-					cell3 = workingGeneration.getCell(0);
+					leftCell = workingGeneration.getCell(j - 1);
+					centerCell = workingGeneration.getCell(j);
+					rightCell = workingGeneration.getCell(0);
 				}
 				
+				//otherwise, the left cell and right cell are pretty self explanatory
 				else {
-					cell1 = workingGeneration.getCell(j - 1);
-					cell2 = workingGeneration.getCell(j);
-					cell3 = workingGeneration.getCell(j + 1);
+					leftCell = workingGeneration.getCell(j - 1);
+					centerCell = workingGeneration.getCell(j);
+					rightCell = workingGeneration.getCell(j + 1);
 				}
-				
-				nextGeneration[j] = ruleAsBinary.setNextCenterCell(cell1, cell2, cell3);
+				//calling Rule object method to set the center cell of the next Generation
+				nextGeneration[j] = ruleAsBinary.setNextCenterCell(leftCell, centerCell, rightCell);
 			}
-			generationList.add(new Generation(nextGeneration, steps));
+			//adds the Generation that was just created to the end of the Generation arraylist
+			generationList.add(new Generation(nextGeneration));
+			//increments the number of steps each iteration of the outer for loop
 			++steps;
 		}
 	}
@@ -145,14 +156,17 @@ public class Automaton {
 	}
 	
 	/**
-	 * Converts the 
-	 * @param stepNum
+	 * Converts a given generation to a string 
+	 * @param stepNum is the specific generation that will be represented as a string 
 	 * @return
 	 */
 	public String getStateString(int stepNum) {
 		String stateString = "";
+		//gets the Generation from the arraylist at the given stepNum
 		Generation relevantGeneration = generationList.get(stepNum);
+		//for loop iterates through each Cell of the Generation
 		for (int i = 0; i < initState.length; ++i) {
+			//Checks what state each Cell is in and adds to the String the appropriate true and false characters
 			if((relevantGeneration.getCell(i)).getState() == true) {
 				stateString += trueSymbol;
 			}
@@ -163,13 +177,18 @@ public class Automaton {
 		return stateString;
 	}
 	
+	/**
+	 * outputs the entire evolution of the ECA as a string
+	 */
 	public String toString() {
 		String returnString = "";
-		
+		//iterates through every Generation of the ECA
 		for(int i = 0; i <= steps; ++i) {
+			//if the Generation is the most current of the ECA, getStateString is used and it is added to the string
 			if(i == steps) {
 				returnString += this.getStateString(i);
 			}
+			//if the Generation is any other, a newline character is added before adding the next generation to the string
 			else {
 				returnString += this.getStateString(i) + "\n";
 			}
@@ -177,24 +196,45 @@ public class Automaton {
 		return returnString;
 	}
 	
+	/**
+	 * outputs the entire evolution of the ECA as a string to a .txt file
+	 * @param filename is the .txt file that the output will be saved to
+	 * @throws IOException
+	 */
 	public void save(String filename) throws IOException{
 		BufferedWriter writer = new BufferedWriter(new FileWriter(filename));
 		writer.write(this.toString());
 		writer.close();
 	}
 	
+	/**
+	 * 
+	 * @return returns the falseSymbol for the ECA
+	 */
 	public char getFalseSymbol() {
 		return falseSymbol;
 	}
 	
+	/**
+	 * 
+	 * @param symbol sets the falseSymbol for the ECA to the given character
+	 */
 	public void setFalseSymbol(char symbol) {
 		falseSymbol = symbol;
 	}
 	
+	/**
+	 * 
+	 * @return returns the trueSymbol for the ECA
+	 */
 	public char getTrueSymbol() {
 		return trueSymbol;
 	}
 	
+	/**
+	 * 
+	 * @param symbol sets the falseSymbol for the ECA to the given character
+	 */
 	public void setTrueSymbol(char symbol) {
 		trueSymbol = symbol;
 	}
