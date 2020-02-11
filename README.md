@@ -5,3 +5,4 @@ Read more on elementary cellular automata at
 ```
 http://mathworld.wolfram.com/ElementaryCellularAutomaton.html 
 ```
+Also read more about the specifics of this project in the project1.pdf
