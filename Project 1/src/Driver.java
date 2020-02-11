@@ -6,7 +6,7 @@ public class Driver {
 		boolean[] finalState = new boolean[] {false, false, false};
 		
 		Automaton test1 = new Automaton("rule122-29cells-output.txt");
-		test1.evolve(5);
+		test1.evolve(14);
 		String output = test1.toString();
 		System.out.println(output);
 		//test1.evolve(7);
