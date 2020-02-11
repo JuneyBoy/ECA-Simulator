@@ -122,7 +122,7 @@ public class Automaton {
 				
 				nextGeneration[j] = ruleAsBinary.setNextCenterCell(cell1, cell2, cell3);
 			}
-			generationList.add(new Generation(nextGeneration, steps));
+			generationList.add(new Generation(nextGeneration));
 			++steps;
 		}
 	}
