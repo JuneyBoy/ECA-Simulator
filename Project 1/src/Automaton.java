@@ -31,7 +31,11 @@ public class Automaton {
 		this.ruleNum = ruleNum;
 		ruleAsBinary = new Rule(ruleNum);
 		this.initState = initState;
+		generationList = new ArrayList<Generation>();
 		generationList.add(new Generation(initState));
+		this.setFalseSymbol('0');
+		this.setTrueSymbol('1');
+		steps = 0;
 	}
 	
 	/**
@@ -75,6 +79,7 @@ public class Automaton {
 		}
 		generationList = new ArrayList<Generation>();
 		generationList.add(new Generation(initState));
+		steps = 0;
 	}
 	
 	/**
