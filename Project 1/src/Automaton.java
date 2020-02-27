@@ -39,7 +39,7 @@ public class Automaton {
 	}
 	
 	/**
-	 * This constructor takes a .txt file and reads all the relavent info from it to make an ECA
+	 * This constructor takes a .txt file and reads all the relevant info from it to make an ECA
 	 * @param filename is the file from which the rule, true and false symbols, and the initial state will be read
 	 * @throws IOException
 	 */
