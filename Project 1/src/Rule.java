@@ -9,7 +9,7 @@ import java.util.Arrays;
 public class Rule {
 	private String ruleInBinary;
 	
-	//all seven binary combinations of the states' of the three cells
+	//all eight binary combinations of the states' of the three cells
 	private boolean[] zeroCombo = new boolean[]{false, false, false};
 	private boolean[] oneCombo = new boolean[]{false, false, true};
 	private boolean[] twoCombo = new boolean[]{false, true, false};
@@ -20,7 +20,7 @@ public class Rule {
 	private boolean[] sevenCombo = new boolean[]{true, true, true};
 	
 	/**
-	 * This constructor takes the rule of the ECA and converts it to binary
+	 * This constructor takes the rule of the ECA and converts it to an 8-bit binary number
 	 * @param rule is the rule of the ECA as an integer
 	 */
 	public Rule(int rule) {

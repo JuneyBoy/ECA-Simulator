@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 /**
- * This is class represents one elementary cellular automata
+ * This is class represents one elementary cellular automaton
  * @author Arjun Ganesan
  * @version 1.0
  *
@@ -238,7 +238,7 @@ public class Automaton {
 	
 	/**
 	 * 
-	 * @param symbol sets the falseSymbol for the ECA to the given character
+	 * @param symbol sets the trueSymbol for the ECA to the given character
 	 */
 	public void setTrueSymbol(char symbol) {
 		trueSymbol = symbol;
