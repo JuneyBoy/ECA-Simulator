@@ -5,9 +5,9 @@ public class Driver {
 		boolean[] initState = new boolean[] {false, false, false, true, false, false, false};
 		boolean[] finalState = new boolean[] {true, false, true, true, false, false};
 		
-		Automaton test1 = new Automaton("rule54-29cells-input.txt");
-		test1.evolve(30);
-		test1.save("rule54-29cells-output.txt");
+		Automaton test1 = new Automaton("rule54-15cells-input.txt");
+		test1.evolve(7);
+		test1.save("rule54-15cells-output.txt");
 		//test1.evolve(7);
 		//test1.save("rule22-15cells-output");
 		
