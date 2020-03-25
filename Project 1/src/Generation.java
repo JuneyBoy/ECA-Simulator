@@ -6,11 +6,13 @@
 
 public class Generation {
 	private Cell[] state;
+	private int size = 0;
 	
 	public Generation(boolean[] state) {
 		this.state = new Cell[state.length];
 		for(int i = 0; i < state.length; ++i) {
 			this.state[i] = new Cell(state[i]);
+			++size;
 		}
 	}
 	
@@ -21,6 +23,7 @@ public class Generation {
 	 */
 	public Generation(Cell[] state) {
 		this.state = state;
+		size = state.length;
 	}
 	
 	/**
@@ -33,6 +36,14 @@ public class Generation {
 			returnArray[i] = state[i].getState();
 		}
 		return returnArray;
+	}
+	
+	public Cell[] getState() {
+		return state;
+	}
+	
+	public int getSize() {
+		return size;
 	}
 	/**
 	 * 

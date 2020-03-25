@@ -8,6 +8,7 @@ import java.util.Arrays;
  */
 public class Rule {
 	private String ruleInBinary;
+	private final int ruleInBinaryLength = 8;
 	
 	//all eight binary combinations of the states' of the three cells
 	private boolean[] zeroCombo = new boolean[]{false, false, false};
@@ -78,5 +79,45 @@ public class Rule {
 		
 		return new Cell(returnValue);
 		
+	}
+	
+	public Generation setNextGeneration(Generation currentGen) {
+	
+		//initializes 3 Cell objects to be used to determine the Cell objects in the next Generation
+		Cell leftCell = new Cell(false);
+		Cell centerCell = new Cell(false);
+		Cell rightCell = new Cell(false);
+		
+		Cell[] nextGenAsCellArray = new Cell[currentGen.getSize()];
+		Generation nextGen = new Generation(nextGenAsCellArray);
+			
+		//inner for loop iterates through each Cell of any given Generation(all generations of a given ECA are the same length)
+		for(int i = 0; i < currentGen.getSize(); ++i) {
+			//if the "center cell" is the first cell in the Generation, the left cell is defined as the last cell in the Generation
+			if (i == 0) {
+				leftCell = currentGen.getCell(currentGen.getSize() - 1);
+				centerCell = currentGen.getCell(i);
+				rightCell = currentGen.getCell(i + 1);
+			}
+			
+			//if the "center cell" is the last cell in the Generation, the right cell is defined as the first cell in the Generation
+			else if(i == (currentGen.getSize() - 1)) {
+				leftCell = currentGen.getCell(i - 1);
+				centerCell = currentGen.getCell(i);
+				rightCell = currentGen.getCell(0);
+			}
+			
+			//otherwise, the left cell and right cell are pretty self explanatory
+			else {
+				leftCell = currentGen.getCell(i - 1);
+				centerCell = currentGen.getCell(i);
+				rightCell = currentGen.getCell(i + 1);
+			}
+			//calling Rule object method to set the center cell of the next Generation
+			nextGenAsCellArray[i] = this.setNextCenterCell(leftCell, centerCell, rightCell);
+		
+		}
+		nextGen = new Generation(nextGenAsCellArray);
+		return nextGen;
 	}
 }
