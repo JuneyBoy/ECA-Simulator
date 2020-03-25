@@ -97,47 +97,20 @@ public class Automaton {
 	public void evolve(int numSteps) {
 		//gets most recent Generation
 		Generation workingGeneration = generationList.get(steps);
+		
 		//initializes Cell array that will become the next Generation
-		Cell[] nextGeneration = new Cell[initState.length];
-		//initializes 3 Cell objects to be used to determine the Cell objects in the next Generation
-		Cell leftCell = new Cell(false);
-		Cell centerCell = new Cell(false);
-		Cell rightCell = new Cell(false);
+		Generation nextGeneration;
 		
 		//outer for loop iterates numSteps times
 		for (int i = numSteps; i > 0; --i) {
 			//at the beginning of each iteration of the outer for loop, the workingGeneration is updated to be the most recent generation
 			workingGeneration = generationList.get(steps);
-			//similarly, the nextGeneration is initialized with default Cell objects
-			nextGeneration = new Cell[initState.length];
 			
-			//inner for loop iterates through each Cell of any given Generation(all generations of a given ECA are the same length)
-			for(int j = 0; j < initState.length; ++j) {
-				//if the "center cell" is the first cell in the Generation, the left cell is defined as the last cell in the Generation
-				if (j == 0) {
-					leftCell = workingGeneration.getCell(initState.length - 1);
-					centerCell = workingGeneration.getCell(j);
-					rightCell = workingGeneration.getCell(j + 1);
-				}
-				
-				//if the "center cell" is the last cell in the Generation, the right cell is defined as the first cell in the Generation
-				else if(j == initState.length - 1) {
-					leftCell = workingGeneration.getCell(j - 1);
-					centerCell = workingGeneration.getCell(j);
-					rightCell = workingGeneration.getCell(0);
-				}
-				
-				//otherwise, the left cell and right cell are pretty self explanatory
-				else {
-					leftCell = workingGeneration.getCell(j - 1);
-					centerCell = workingGeneration.getCell(j);
-					rightCell = workingGeneration.getCell(j + 1);
-				}
-				//calling Rule object method to set the center cell of the next Generation
-				nextGeneration[j] = ruleAsBinary.setNextCenterCell(leftCell, centerCell, rightCell);
-			}
+			//similarly, the nextGeneration is initialized with default Cell objects
+			nextGeneration = ruleAsBinary.setNextGeneration(workingGeneration);
+			
 			//adds the Generation that was just created to the end of the Generation arraylist
-			generationList.add(new Generation(nextGeneration));
+			generationList.add(nextGeneration);
 			//increments the number of steps each iteration of the outer for loop
 			++steps;
 		}
